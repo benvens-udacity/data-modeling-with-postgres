@@ -11,52 +11,52 @@ time_table_drop = "DROP TABLE time;"
 songplay_table_create = ("""CREATE TABLE songplays (
                             songplay_id int, 
                             start_time int, 
-                             user_id int, 
-                             level int, 
-                             song_id int, 
-                             artist_id int, 
-                             session_id int, 
-                             location varchar, 
-                             user_agent varchar
-                        );""")
+                            user_id int, 
+                            level int, 
+                            song_id int, 
+                            artist_id int, 
+                            session_id int, 
+                            location varchar, 
+                            user_agent varchar,
+                            CONSTRAINT songplay_pk PRIMARY KEY (songplay_id) );""")
 
 user_table_create = ("""CREATE TABLE users (
-                        user_id int, 
-                        first_name varchar, 
-                        last_name varchar, 
-                        gender varchar, 
-                        level int
-                    );""")
+                        user_id int,
+                        first_name varchar,
+                        last_name varchar,
+                        gender varchar,
+                        level varchar,
+                        CONSTRAINT user_pk PRIMARY KEY (user_id) );""")
 
 song_table_create = ("""CREATE TABLE songs (
-                        song_id int,
+                        song_id varchar,
                         title varchar,
-                        artist_id int,
+                        artist_id varchar,
                         year int,
-                        duration int
-                    );""")
+                        duration real,
+                        CONSTRAINT song_pk PRIMARY KEY (song_id) );""")
 
 artist_table_create = ("""CREATE TABLE artists (
-                            artist_id int,
+                            artist_id varchar,
                             name varchar,
                             location varchar,
-                            latitude int,
-                            longitude int
-                    );""")
+                            latitude int NULL,
+                            longitude int NULL,
+                        CONSTRAINT artist_pk PRIMARY KEY (artist_id) );""")
 
 time_table_create = ("""CREATE TABLE time (
-                        start_time int,
+                        start_time timestamp without time zone,
                         hour int,
                         day int,
                         week int,
                         month int,
                         year int,
-                        weekday int
-                    );""")
+                        weekday int,
+                        CONSTRAINT start_time_pk PRIMARY KEY (start_time) );""")
 
 # INSERT RECORDS
 
-songplay_table_insert = ("""INSERT INTO TABLE songplays (
+songplay_table_insert = ("""INSERT INTO songplays (
                                 songplay_id, 
                                 start_time, 
                                 user_id, 
@@ -70,26 +70,26 @@ songplay_table_insert = ("""INSERT INTO TABLE songplays (
                                 %s, %s, %s, %s, %s, %s, %s, %s, %s
                             );""")
 
-user_table_insert = ("""INSERT INTO TABLE users (
+user_table_insert = ("""INSERT INTO users (
                             user_id, first_name, last_name, gender, level
                         ) VALUES(
                             %s, %s, %s, %s, %s
                         );""")
 
-song_table_insert = ("""INSERT INTO TABLE songs (
+song_table_insert = ("""INSERT INTO songs (
                             song_id, title, artist_id, year, duration
                         ) VALUES (
                             %s, %s, %s, %s, %s
                         );""")
 
-artist_table_insert = ("""INSERT INTO TABLE artists (
+artist_table_insert = ("""INSERT INTO artists (
                                 artist_id, name, location, latitude, longitude
                             ) VALUES (
                                 %s, %s, %s, %s, %s
                             );""")
 
 
-time_table_insert = ("""INSERT INTO TABLE time (
+time_table_insert = ("""INSERT INTO time (
                             start_time, hour, day, week, month, year, weekday
                         ) VALUES (
                             %s, %s, %s, %s, %s, %s, %s
