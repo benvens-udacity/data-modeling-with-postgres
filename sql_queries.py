@@ -9,61 +9,61 @@ time_table_drop = "DROP TABLE time;"
 # CREATE TABLES
 
 songplay_table_create = ("""CREATE TABLE songplays (
-                            songplay_id int, 
-                            start_time int, 
-                            user_id int, 
-                            level int, 
-                            song_id int, 
-                            artist_id int, 
-                            session_id int, 
-                            location varchar, 
-                            user_agent varchar,
+                            songplay_id BIGINT, 
+                            song_id BIGINT NULL, 
+                            artist_id BIGINT NULL, 
+                            user_id VARCHAR, 
+                            session_id REAL, 
+                            start_time BIGINT, 
+                            level VARCHAR, 
+                            location VARCHAR, 
+                            user_agent VARCHAR,
                             CONSTRAINT songplay_pk PRIMARY KEY (songplay_id) );""")
 
 user_table_create = ("""CREATE TABLE users (
-                        user_id int,
-                        first_name varchar,
-                        last_name varchar,
-                        gender varchar,
-                        level varchar,
+                        user_id VARCHAR,
+                        first_name VARCHAR,
+                        last_name VARCHAR,
+                        gender VARCHAR,
+                        level VARCHAR,
                         CONSTRAINT user_pk PRIMARY KEY (user_id) );""")
 
 song_table_create = ("""CREATE TABLE songs (
-                        song_id varchar,
-                        title varchar,
-                        artist_id varchar,
-                        year int,
-                        duration real,
+                        song_id VARCHAR,
+                        title VARCHAR,
+                        artist_id VARCHAR,
+                        year BIGINT,
+                        duration REAL,
                         CONSTRAINT song_pk PRIMARY KEY (song_id) );""")
 
 artist_table_create = ("""CREATE TABLE artists (
-                            artist_id varchar,
-                            name varchar,
-                            location varchar,
-                            latitude int NULL,
-                            longitude int NULL,
+                            artist_id VARCHAR,
+                            name VARCHAR,
+                            location VARCHAR,
+                            latitude BIGINT NULL,
+                            longitude BIGINT NULL,
                         CONSTRAINT artist_pk PRIMARY KEY (artist_id) );""")
 
 time_table_create = ("""CREATE TABLE time (
                         start_time timestamp without time zone,
-                        hour int,
-                        day int,
-                        week int,
-                        month int,
-                        year int,
-                        weekday int,
+                        hour INT,
+                        day INT,
+                        week INT,
+                        month INT,
+                        year INT,
+                        weekday INT,
                         CONSTRAINT start_time_pk PRIMARY KEY (start_time) );""")
 
 # INSERT RECORDS
 
 songplay_table_insert = ("""INSERT INTO songplays (
-                                songplay_id, 
-                                start_time, 
-                                user_id, 
-                                level, 
+                                songplay_id,
                                 song_id, 
                                 artist_id, 
+                                user_id, 
                                 session_id, 
+                                start_time, 
+                                level, 
                                 location, 
                                 user_agent
                             ) VALUES (
@@ -97,7 +97,18 @@ time_table_insert = ("""INSERT INTO time (
 
 # FIND SONGS
 
-song_select = ("""
+song_select = ("""SELECT
+                        s.song_id,
+                        a.artist_id
+                FROM    
+                        songs AS s,
+                        artists AS a
+                WHERE   
+                        s.title = %s AND
+                        a.name = %s AND
+                        s.duration = %s AND
+                        s.artist_id = a.artist_id
+
 """)
 
 # QUERY LISTS
