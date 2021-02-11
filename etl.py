@@ -16,7 +16,8 @@ def get_files(filepath):
     return all_files
 
 
-conn = psycopg2.connect("host=local-postgres dbname=sparkifydb user=student password=student")
+# conn = psycopg2.connect("host=local-postgres dbname=sparkifydb user=student password=student")
+conn = psycopg2.connect("host=udacity-net dbname=sparkifydb user=student password=student")
 cur = conn.cursor()
 
 
