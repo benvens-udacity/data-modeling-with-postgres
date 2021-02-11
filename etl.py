@@ -40,7 +40,6 @@ def process_song_file(cur, filepath):
                               'artist_latitude',
                               'artist_longitude']].to_numpy()
     artist_data = [None if type(el).__module__ == 'numpy' and np.isnan(el) else el for el in artist_data]
-    artist_data = artist_data.drop_duplicates(keep='first')
     cur.execute(artist_table_insert, artist_data)
 
 

@@ -86,7 +86,13 @@ artist_table_insert = ("""INSERT INTO artists (
                                 artist_id, name, location, latitude, longitude
                             ) VALUES (
                                 %s, %s, %s, %s, %s
-                            );""")
+                            )
+                            ON CONFLICT (artist_id) DO UPDATE 
+                            SET name = excluded.name,
+                                location = excluded.location,
+                                latitude = excluded.latitude,
+                                longitude = excluded.longitude
+                            ;""")
 
 
 time_table_insert = ("""INSERT INTO time (
