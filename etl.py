@@ -16,8 +16,7 @@ def get_files(filepath):
     return all_files
 
 
-# conn = psycopg2.connect("host=local-postgres dbname=sparkifydb user=student password=student")
-conn = psycopg2.connect("host=udacity-net dbname=sparkifydb user=student password=student")
+conn = psycopg2.connect("host=local-postgres dbname=sparkifydb user=student password=student")
 cur = conn.cursor()
 
 
@@ -52,11 +51,14 @@ def process_log_file(cur, filepath):
     df = df.loc[df['page'] == 'NextSong']
 
     # convert timestamp column to datetime
-    t = pd.to_datetime(df['ts'], unit='ms').to_numpy()
+    t = pd.to_datetime(df['ts'], unit='ms')
     
     # insert time data records
     time_data = (t, t.dt.hour, t.dt.day, t.dt.isocalendar().week, t.dt.month, t.dt.year, t.dt.weekday)
     column_labels = ['start_time', 'hour', 'day', 'week', 'month', 'year', 'weekday']
+#     print(time_data)
+#     print(time_data.shape)
+#     print(column_labels)
     time_df = pd.DataFrame(data=time_data, columns=column_labels)
 
     for i, row in time_df.iterrows():
@@ -114,5 +116,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+# !conda env export -n base > environment.yml
 
 

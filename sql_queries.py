@@ -80,7 +80,13 @@ song_table_insert = ("""INSERT INTO songs (
                             song_id, title, artist_id, year, duration
                         ) VALUES (
                             %s, %s, %s, %s, %s
-                        );""")
+                        )
+                        ON CONFLICT (song_id) DO UPDATE 
+                        SET title = excluded.title,
+                            artist_id = excluded.artist_id,
+                            year = excluded.year,
+                            duration = excluded.duration
+                        ;""")
 
 artist_table_insert = ("""INSERT INTO artists (
                                 artist_id, name, location, latitude, longitude
