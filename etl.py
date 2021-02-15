@@ -5,6 +5,8 @@ import numpy as np
 import pandas as pd
 from sql_queries import *
 
+import json
+import sys
 
 def get_files(filepath):
     all_files = []
@@ -17,8 +19,7 @@ def get_files(filepath):
 
 
 # conn = psycopg2.connect("host=local-postgres dbname=sparkifydb user=student password=student")
-conn = psycopg2.connect("host=udacity-net dbname=sparkifydb user=student password=student")
-cur = conn.cursor()
+# cur = conn.cursor()
 
 
 def process_song_file(cur, filepath):
@@ -103,7 +104,7 @@ def process_data(cur, conn, filepath, func):
 
 
 def main():
-    conn = psycopg2.connect("host=local-postgres dbname=sparkifydb user=student password=student")
+    conn = psycopg2.connect("host=192.168.0.200 dbname=sparkifydb user=student password=student")
     cur = conn.cursor()
 
     process_data(cur, conn, filepath='data/song_data', func=process_song_file)
@@ -113,6 +114,10 @@ def main():
 
 
 if __name__ == "__main__":
+    print(sys.version)
+    print(pd.__version__)
+    print(np.__version__)
+    print(json.__version__)
     main()
 
 
