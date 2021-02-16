@@ -68,7 +68,17 @@ songplay_table_insert = ("""INSERT INTO songplays (
                                 user_agent
                             ) VALUES (
                                 %s, %s, %s, %s, %s, %s, %s, %s, %s
-                            );""")
+                            )
+                        ON CONFLICT (songplay_id) DO UPDATE 
+                        SET song_id = excluded.song_id,
+                            artist_id = excluded.artist_id,
+                            user_id = excluded.user_id,
+                            session_id = excluded.session_id,
+                            start_time = excluded.start_time,
+                            level = excluded.level,
+                            location = excluded.location
+                            user_agent = excluded.user_agent
+                            ;""")
 
 user_table_insert = ("""INSERT INTO users (
                             user_id, first_name, last_name, gender, level
