@@ -17,14 +17,17 @@ def get_files(filepath):
     
     return all_files
 
-
-# conn = psycopg2.connect("host=local-postgres dbname=sparkifydb user=student password=student")
-# cur = conn.cursor()
-
+def read_song_file(filepath):
+    content = None
+    with open(filepath, 'r') as file:
+        content = file.read().strip('\n')
+    dict = json.loads(content)
+    return pd.DataFrame(dict, index=[0])
 
 def process_song_file(cur, filepath):
     # open song file
-    df = pd.read_json(filepath, orient='records', lines=True)
+    # df = pd.read_json(filepath, orient='records', lines=True)
+    df = read_song_file(filepath)
 
     # insert song record
     song_data = df.iloc[0][['song_id',
@@ -53,12 +56,21 @@ def process_log_file(cur, filepath):
     df = df.loc[df['page'] == 'NextSong']
 
     # convert timestamp column to datetime
-    t = pd.to_datetime(df['ts'], unit='ms').to_numpy()
+    t = pd.to_datetime(df['ts'], unit='ms')
     
     # insert time data records
-    time_data = (t, t.dt.hour, t.dt.day, t.dt.isocalendar().week, t.dt.month, t.dt.year, t.dt.weekday)
-    column_labels = ['start_time', 'hour', 'day', 'week', 'month', 'year', 'weekday']
-    time_df = pd.DataFrame(data=time_data, columns=column_labels)
+    # time_data = (t, t.dt.hour, t.dt.day, t.dt.isocalendar().week, t.dt.month, t.dt.year, t.dt.weekday)
+    # column_labels = ['start_time', 'hour', 'day', 'week', 'month', 'year', 'weekday']
+    # time_df = pd.DataFrame(data=time_data, columns=column_labels)
+    time_df = pd.DataFrame({
+        'start_time': t,
+        'hour': t.dt.hour,
+        'day': t.dt.day,
+        'week': t.dt.isocalendar().week,
+        'month': t.dt.month,
+        'year': t.dt.year,
+        'weekday': t.dt.weekday
+    })
 
     for i, row in time_df.iterrows():
         cur.execute(time_table_insert, list(row))
