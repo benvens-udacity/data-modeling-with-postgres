@@ -54,12 +54,15 @@ def process_log_file(cur, filepath):
     t = pd.to_datetime(df['ts'], unit='ms')
     
     # insert time data records
-    time_data = (t, t.dt.hour, t.dt.day, t.dt.isocalendar().week, t.dt.month, t.dt.year, t.dt.weekday)
+    time_data = (t, t.dt.hour, t.dt.day, t.dt.isocalendar().week.astype(np.int64), t.dt.month, t.dt.year, t.dt.weekday)
     column_labels = ['start_time', 'hour', 'day', 'week', 'month', 'year', 'weekday']
     print(time_data)
 #     print(time_data.shape)
 #     print(column_labels)
-    time_df = pd.DataFrame(data=time_data, columns=column_labels)
+#     time_df = pd.DataFrame(data=time_data, columns=column_labels)
+    time_df = pd.DataFrame({'start_time': t,
+                            'hour': })
+
 
     for i, row in time_df.iterrows():
         cur.execute(time_table_insert, list(row))

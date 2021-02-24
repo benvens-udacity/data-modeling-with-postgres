@@ -76,7 +76,7 @@ songplay_table_insert = ("""INSERT INTO songplays (
                             session_id = excluded.session_id,
                             start_time = excluded.start_time,
                             level = excluded.level,
-                            location = excluded.location
+                            location = excluded.location,
                             user_agent = excluded.user_agent
                             ;""")
 
@@ -90,7 +90,6 @@ user_table_insert = ("""INSERT INTO users (
                             last_name = excluded.last_name,
                             gender = excluded.gender,
                             level = excluded.level
-
                         ;""")
 
 song_table_insert = ("""INSERT INTO songs (
@@ -122,7 +121,15 @@ time_table_insert = ("""INSERT INTO time (
                             start_time, hour, day, week, month, year, weekday
                         ) VALUES (
                             %s, %s, %s, %s, %s, %s, %s
-                        );""")
+                        )
+                        ON CONFLICT (start_time) DO UPDATE 
+                        SET hour = excluded.hour,
+                            day = excluded.day,
+                            week = excluded.week,
+                            month = excluded.month,
+                            year = excluded.year,
+                            weekday = excluded.weekday
+                        ;""")
 
 # FIND SONGS
 
