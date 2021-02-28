@@ -26,7 +26,7 @@ def get_files(filepath: str) -> list:
     return all_files
 
 
-conn = psycopg2.connect("host=local-postgres dbname=sparkifydb user=student password=student")
+conn = psycopg2.connect("host=localhost dbname=sparkifydb user=student password=student")
 cur = conn.cursor()
 
 
@@ -141,7 +141,7 @@ def process_data(cur, conn, filepath: str, func: Callable):
 def main():
     """Setup database connection and cursor, then process the song and log files.
     """
-    conn = psycopg2.connect("host=local-postgres dbname=sparkifydb user=student password=student")
+    conn = psycopg2.connect("host=localhost dbname=sparkifydb user=student password=student")
     cur = conn.cursor()
 
     process_data(cur, conn, filepath='data/song_data', func=process_song_file)
