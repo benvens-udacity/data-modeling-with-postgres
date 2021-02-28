@@ -85,11 +85,7 @@ user_table_insert = ("""INSERT INTO users (
                         ) VALUES(
                             %s, %s, %s, %s, %s
                         )
-                        ON CONFLICT (user_id) DO UPDATE 
-                        SET first_name = excluded.first_name,
-                            last_name = excluded.last_name,
-                            gender = excluded.gender,
-                            level = excluded.level
+                        ON CONFLICT DO NOTHING
                         ;""")
 
 song_table_insert = ("""INSERT INTO songs (
@@ -97,11 +93,7 @@ song_table_insert = ("""INSERT INTO songs (
                         ) VALUES (
                             %s, %s, %s, %s, %s
                         )
-                        ON CONFLICT (song_id) DO UPDATE 
-                        SET title = excluded.title,
-                            artist_id = excluded.artist_id,
-                            year = excluded.year,
-                            duration = excluded.duration
+                        ON CONFLICT (song_id) DO NOTHING
                         ;""")
 
 artist_table_insert = ("""INSERT INTO artists (
@@ -109,11 +101,7 @@ artist_table_insert = ("""INSERT INTO artists (
                             ) VALUES (
                                 %s, %s, %s, %s, %s
                             )
-                            ON CONFLICT (artist_id) DO UPDATE 
-                            SET name = excluded.name,
-                                location = excluded.location,
-                                latitude = excluded.latitude,
-                                longitude = excluded.longitude
+                            ON CONFLICT (artist_id) DO NOTHING
                             ;""")
 
 
@@ -122,13 +110,7 @@ time_table_insert = ("""INSERT INTO time (
                         ) VALUES (
                             %s, %s, %s, %s, %s, %s, %s
                         )
-                        ON CONFLICT (start_time) DO UPDATE 
-                        SET hour = excluded.hour,
-                            day = excluded.day,
-                            week = excluded.week,
-                            month = excluded.month,
-                            year = excluded.year,
-                            weekday = excluded.weekday
+                        ON CONFLICT (start_time) DO NOTHING
                         ;""")
 
 # FIND SONGS
@@ -145,7 +127,7 @@ song_select = ("""SELECT
                         s.duration = %s AND
                         s.artist_id = a.artist_id
 
-""")
+                """)
 
 # QUERY LISTS
 

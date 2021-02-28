@@ -4,9 +4,19 @@ import psycopg2
 import numpy as np
 import pandas as pd
 from sql_queries import *
+from typing import Callable
 
 
-def get_files(filepath):
+def get_files(filepath: str) -> list:
+    """Given a directory path, return the list of files in that directory.
+    
+    Args:
+        filepath (string): path to the directory.
+        
+    Returns:
+        a list of file names.
+    
+    """
     all_files = []
     for root, dirs, files in os.walk(filepath):
         files = glob.glob(os.path.join(root,'*.json'))
@@ -20,7 +30,13 @@ conn = psycopg2.connect("host=local-postgres dbname=sparkifydb user=student pass
 cur = conn.cursor()
 
 
-def process_song_file(cur, filepath):
+def process_song_file(cur, filepath: str) -> None:
+    """Given a directory path, process the song JSON files in that directory.
+    
+    Args:
+        cur: cursor used to execute SQL statements.
+        filepath (string): path to the JSON song data.
+    """
     # open song file
     df = pd.read_json(filepath, orient='records', lines=True)
 
@@ -43,7 +59,14 @@ def process_song_file(cur, filepath):
     cur.execute(artist_table_insert, artist_data)
 
 
-def process_log_file(cur, filepath):
+def process_log_file(cur, filepath: str) -> None:
+    """Given a directory path, process the log JSON files in that directory.
+    
+    Args:
+        cur: cursor used to execute SQL statements.
+        filepath (string): path to the JSON log data.
+    """
+
     # open log file
     df = pd.read_json(filepath, orient='records', lines=True)
 
@@ -87,7 +110,16 @@ def process_log_file(cur, filepath):
         cur.execute(songplay_table_insert, songplay_data)
 
 
-def process_data(cur, conn, filepath, func):
+def process_data(cur, conn, filepath: str, func: Callable):
+    """Given a directory path, process the song JSON files in that directory.
+    
+    Args:
+        cur: cursor used to execute SQL statements.
+        conn: connection to the database.
+        filepath (string): path to the directory containing the JSON data files (song or log).
+        func (function): the specific function used to parse a JSON file, and then update the relevant tables.
+    """
+
     # get all files matching extension from directory
     all_files = []
     for root, dirs, files in os.walk(filepath):
@@ -107,6 +139,8 @@ def process_data(cur, conn, filepath, func):
 
 
 def main():
+    """Setup database connection and cursor, then process the song and log files.
+    """
     conn = psycopg2.connect("host=local-postgres dbname=sparkifydb user=student password=student")
     cur = conn.cursor()
 
@@ -118,3 +152,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
