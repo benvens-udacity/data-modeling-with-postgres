@@ -16,6 +16,15 @@ The project directory contains the following files:
 | `run-postgres.sh` | Script to start local Docker container running the Postgres image. |
 | `sql_queries.py` | Quaery the data in the fact table and dimension tables. |
 
+## Python scripts
+
+The Python scripts take no parameters. They should be run so:
+
+```
+    python create_tables.py
+    python etl.py
+```
+
 ## Schema
 
 A mentioned, a star schema is used, consisting of a fact table, and a number of dimension tables.
