@@ -9,12 +9,12 @@ time_table_drop = "DROP TABLE time;"
 # CREATE TABLES
 
 songplay_table_create = ("""CREATE TABLE songplays (
-                            songplay_id BIGINT, 
-                            song_id BIGINT NULL, 
-                            artist_id BIGINT NULL, 
-                            user_id VARCHAR, 
-                            session_id REAL, 
-                            start_time BIGINT, 
+                            songplay_id BIGINT NOT NULL, 
+                            song_id BIGINT NULL NOT NULL, 
+                            artist_id BIGINT NULL NOT NULL, 
+                            user_id VARCHAR NOT NULL, 
+                            session_id REAL NOT NULL, 
+                            start_time BIGINT NOT NULL, 
                             level VARCHAR, 
                             location VARCHAR, 
                             user_agent VARCHAR,
@@ -25,23 +25,23 @@ user_table_create = ("""CREATE TABLE users (
                         first_name VARCHAR NOT NULL,
                         last_name VARCHAR NOT NULL,
                         gender VARCHAR,
-                        level VARCHAR NOT NULL,
+                        level VARCHAR,
                         CONSTRAINT user_pk PRIMARY KEY (user_id) );""")
 
 song_table_create = ("""CREATE TABLE songs (
                         song_id VARCHAR NOT NULL,
                         title VARCHAR NOT NULL,
                         artist_id VARCHAR NOT NULL,
-                        year BIGINT NOT NULL,
-                        duration REAL NOT NULL,
+                        year BIGINT,
+                        duration REAL,
                         CONSTRAINT song_pk PRIMARY KEY (song_id) );""")
 
 artist_table_create = ("""CREATE TABLE artists (
                             artist_id VARCHAR NOT NULL,
                             name VARCHAR NOT NULL,
-                            location VARCHAR NOT NULL,
-                            latitude BIGINT NULL,
-                            longitude BIGINT NULL,
+                            location VARCHAR,
+                            latitude BIGINT,
+                            longitude BIGINT,
                         CONSTRAINT artist_pk PRIMARY KEY (artist_id) );""")
 
 time_table_create = ("""CREATE TABLE time (

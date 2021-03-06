@@ -111,7 +111,7 @@ def process_log_file(cur, filepath: str) -> None:
 
 
 def process_data(cur, conn, filepath: str, func: Callable):
-    """Given a directory path, process the song JSON files in that directory.
+    """Given a directory path, process the JSON data files in that directory.
     
     Args:
         cur: cursor used to execute SQL statements.
