@@ -85,7 +85,8 @@ user_table_insert = ("""INSERT INTO users (
                         ) VALUES(
                             %s, %s, %s, %s, %s
                         )
-                        ON CONFLICT DO NOTHING
+                        ON CONFLICT (user_id) DO UPDATE 
+                        SET level = excluded.level
                         ;""")
 
 song_table_insert = ("""INSERT INTO songs (
