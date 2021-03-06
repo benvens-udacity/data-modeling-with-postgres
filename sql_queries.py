@@ -10,8 +10,8 @@ time_table_drop = "DROP TABLE time;"
 
 songplay_table_create = ("""CREATE TABLE songplays (
                             songplay_id BIGINT NOT NULL, 
-                            song_id BIGINT NOT NULL, 
-                            artist_id BIGINT NOT NULL, 
+                            song_id BIGINT, 
+                            artist_id BIGINT, 
                             user_id VARCHAR NOT NULL, 
                             session_id REAL NOT NULL, 
                             start_time BIGINT NOT NULL, 
@@ -127,7 +127,6 @@ song_select = ("""SELECT
                         a.name = %s AND
                         s.duration = %s AND
                         s.artist_id = a.artist_id
-
                 """)
 
 # QUERY LISTS
