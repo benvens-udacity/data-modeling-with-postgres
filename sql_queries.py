@@ -21,37 +21,37 @@ songplay_table_create = ("""CREATE TABLE songplays (
                             CONSTRAINT songplay_pk PRIMARY KEY (songplay_id) );""")
 
 user_table_create = ("""CREATE TABLE users (
-                        user_id VARCHAR,
-                        first_name VARCHAR,
-                        last_name VARCHAR,
+                        user_id VARCHAR NOT NULL,
+                        first_name VARCHAR NOT NULL,
+                        last_name VARCHAR NOT NULL,
                         gender VARCHAR,
-                        level VARCHAR,
+                        level VARCHAR NOT NULL,
                         CONSTRAINT user_pk PRIMARY KEY (user_id) );""")
 
 song_table_create = ("""CREATE TABLE songs (
-                        song_id VARCHAR,
-                        title VARCHAR,
-                        artist_id VARCHAR,
-                        year BIGINT,
-                        duration REAL,
+                        song_id VARCHAR NOT NULL,
+                        title VARCHAR NOT NULL,
+                        artist_id VARCHAR NOT NULL,
+                        year BIGINT NOT NULL,
+                        duration REAL NOT NULL,
                         CONSTRAINT song_pk PRIMARY KEY (song_id) );""")
 
 artist_table_create = ("""CREATE TABLE artists (
-                            artist_id VARCHAR,
-                            name VARCHAR,
-                            location VARCHAR,
+                            artist_id VARCHAR NOT NULL,
+                            name VARCHAR NOT NULL,
+                            location VARCHAR NOT NULL,
                             latitude BIGINT NULL,
                             longitude BIGINT NULL,
                         CONSTRAINT artist_pk PRIMARY KEY (artist_id) );""")
 
 time_table_create = ("""CREATE TABLE time (
-                        start_time timestamp without time zone,
-                        hour INT,
-                        day INT,
-                        week INT,
-                        month INT,
-                        year INT,
-                        weekday INT,
+                        start_time timestamp without time zone NOT NULL,
+                        hour INT NOT NULL,
+                        day INT NOT NULL,
+                        week INT NOT NULL,
+                        month INT NOT NULL,
+                        year INT NOT NULL,
+                        weekday INT NOT NULL,
                         CONSTRAINT start_time_pk PRIMARY KEY (start_time) );""")
 
 # INSERT RECORDS
